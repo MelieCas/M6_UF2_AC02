@@ -6,12 +6,9 @@ import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Properties;
 
 public class Utility {
-    private final static Pattern phonePattern = Pattern.compile("^\\d{9}$");
-    private final static Pattern datePattern = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$");
     //Checks if user answer is positive or negative.
     public static boolean confirmAnswer(String answer) {
         if (null == answer) {  

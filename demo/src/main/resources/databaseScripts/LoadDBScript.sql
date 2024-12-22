@@ -1,5 +1,14 @@
-CREATE or REPLACE DATABASE empresa;
+CREATE DATABASE IF NOT EXISTS empresa;
 
+use empresa;
+
+drop TABLE if EXISTS historics;
+drop TABLE if EXISTS tasques;
+drop TABLE if EXISTS gerents;
+drop TABLE if EXISTS empleats;
+drop TABLE if EXISTS equips;
+drop TABLE if EXISTS departaments;
+drop TABLE if EXISTS empresas;
 
 Create or Replace table empresas (
         id int primary key auto_increment,
@@ -14,8 +23,7 @@ Create or Replace table departaments (
         id int primary key auto_increment,
         nom varchar(30) not null,
         empresa_id int,
-        CONSTRAINT 'fk_departaments_empresas'
-        FOREIGN KEY (empresa_id) REFERENCES empresas(id)        
+        CONSTRAINT fk_departaments_empresas FOREIGN KEY (empresa_id) REFERENCES empresas (id)        
 );
 
 
@@ -36,8 +44,8 @@ Create or Replace table empleats (
         sou double,
         departament_id int not null,
         equip_id int not null,
-        CONSTRAINT 'fk_empleats_departaments' FOREIGN KEY (departament_id) REFERENCES departaments (id),
-        CONSTRAINT 'fk_empleats_equips' FOREIGN KEY (equip_id) REFERENCES equips (id)
+        CONSTRAINT fk_empleats_departaments FOREIGN KEY (departament_id) REFERENCES departaments (id),
+        CONSTRAINT fk_empleats_equips FOREIGN KEY (equip_id) REFERENCES equips (id)
 );
 
 
@@ -49,7 +57,7 @@ Create or Replace table empleats (
 
 Create or Replace table gerents (
         id int primary key,
-        CONSTRAINT 'fk_gerents_empleats' FOREIGN KEY (id) REFERENCES empleats (id)
+        CONSTRAINT fk_gerents_empleats FOREIGN KEY (id) REFERENCES empleats (id)
 );
 
 
@@ -57,12 +65,12 @@ Create or Replace table gerents (
 
 Create or Replace table tasques (
         id int primary key auto_increment,
-        nom varchar(30) not null,
+        nom varchar(100) not null,
         descripcio varchar(100),
         fecha_limit date not null,
         prioritat varchar(20) not null,
         id_equip int not null,
-        CONSTRAINT 'fk_tasques_equips' FOREIGN KEY (id_equip) REFERENCES equips (id)
+        CONSTRAINT fk_tasques_equips FOREIGN KEY (id_equip) REFERENCES equips (id)
 );
 
 
@@ -79,8 +87,8 @@ Create or Replace table historics (
 	    comentaris varchar (500),
         id_tasca int not null,
         id_equip int not null,
-        CONSTRAINT 'fk_asignacions_tasques' FOREIGN KEY (id_tasca) REFERENCES tasques (id),
-        CONSTRAINT 'fk_asignacions_empleats' FOREIGN KEY (id_equip) REFERENCES equips (id)
+        CONSTRAINT fk_asignacions_tasques FOREIGN KEY (id_tasca) REFERENCES tasques (id),
+        CONSTRAINT fk_asignacions_empleats FOREIGN KEY (id_equip) REFERENCES equips (id)
 );
 
 
@@ -94,7 +102,7 @@ INSERT INTO equips (nom)
 VALUES ('Equipo A');
 
 INSERT INTO empleats (nom, primer_cognom, segon_cognom, dni, telefon, sou, departament_id, equip_id)
-VALUES ('Juan', 'Pérez', 'González', '12345678A', '612345678', 2500.00, 1, 1);
+VALUES ('Juan', 'Perez', 'Alvarez', '12345678A', '612345678', 2500.00, 1, 1);
 
 INSERT INTO gerents (id)
 VALUES (1);
